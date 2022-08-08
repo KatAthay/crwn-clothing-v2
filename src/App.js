@@ -30,13 +30,38 @@ class App extends Component {
       );
   }
 
+  componentDidMount() {
+    console.log('componentDidMount');
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((users) =>
+        this.setState(
+          () => {
+            return { monsters: users };
+          },
+          () => {
+            console.log(this.state);
+          }
+        )
+      );
+  }
+
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLocaleLowerCase();
+    this.setState(() => {
+      return { searchField };
+    });
+  };
+
   render() {
     console.log('render');
+<<<<<<< HEAD
 
     const {monsters, searchField } = this.state
     const { searchChange } = this;
 
     const filteredMonsters = this.state.monsters.filter((monster) => {
+
       return monster.name.toLocaleLowerCase().includes(searchField);
     });
 
@@ -46,8 +71,10 @@ class App extends Component {
           className='search-box'
           type='search'
           placeholder='Search Monsters'
+
           onChange={ onSearchChange }
         />
+
 
         {filteredMonsters.map((monster) => {
           return (
